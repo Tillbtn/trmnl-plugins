@@ -1,0 +1,23 @@
+# TRMNLP configuration
+# {{ env.VARIABLE }} interpolation is available here
+---
+# auto-reload when files change (`watch: false` to disable)
+watch:
+  - .trmnlp.yml
+  - src
+
+# values of custom fields (defined in src/settings.yml)
+custom_fields:
+  osm_user: Till_btn
+  changeset_id: ""
+  render_mode: png
+  map_style: toner
+  map_config: '{"base":"vector","bg":"white","dither":"floyd2","landuse":"dots","landuseGray":237,"water":"wave","waterGray":184,"roads":"casing","roadGray":138,"roadWidth":2,"buildings":"3d","buildingGray":196,"building3dHeight":2.4,"edited":{"fill":true,"color":"black","halo":"white","width":3,"node":4.5},"patternScale":1.45,"lineScale":1.35}'
+  show_edits: true
+  show_streak: true
+  show_kpi: false
+  show_header: true
+
+# override variables
+variables:
+  trmnl: {}

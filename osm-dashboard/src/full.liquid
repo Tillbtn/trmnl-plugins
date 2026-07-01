@@ -1,0 +1,67 @@
+{% if error != "" %}
+<div class="layout layout--col layout--center">
+  <span class="title title--small">OSM Dashboard – Fehler</span>
+  <span class="description">{{ error }}</span>
+</div>
+{% else %}
+<div class="layout" style="padding:0;">
+  <div style="position:relative; width:800px; height:480px; overflow:hidden;">
+
+    <img src="{{ map_datauri }}" width="800" height="480" style="position:absolute; left:0; top:0; display:block;">
+
+    {% if show_header %}
+    <!-- Kopf: Changeset (oben links) -->
+    <div style="position:absolute; left:0; top:0; background:#fff; border:2px solid #000;
+                border-left:0; border-top:0; border-bottom-right-radius:12px; padding:5px 12px 6px; max-width:560px;">
+      <div style="font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:1.3px;">
+        OSM Changeset #{{ changeset_id }} · {{ created_at | date: "%d.%m.%Y" }}</div>
+      <div style="font-size:20px; font-weight:800; line-height:1.05;">{{ comment }}
+        <span style="font-weight:500; font-size:14px;">· {{ changeset_user }}</span></div>
+      <div style="font-size:11px; font-weight:600; margin-top:1px;">{{ n_created }} erstellt · {{ n_modified }} geändert</div>
+    </div>
+    {% endif %}
+
+    {% if show_streak %}
+    <!-- Streak (oben rechts, Fokus) -->
+    <div style="position:absolute; right:0; top:0; background:#fff; border:2px solid #000;
+                border-right:0; border-top:0; border-bottom-left-radius:12px;
+                padding:6px 13px 6px 12px; display:flex; align-items:center; gap:9px;">
+      <svg viewBox="0 0 384 512" width="34" height="42" fill="#000">
+        <path d="M216 23.86c0-23.8-30.65-32.77-44.15-13.04C48 191.85 224 200 224 288c0 35.63-29.11 64.46-64.85 63.99-35.17-.45-63.15-29.77-63.15-64.94v-85.51c0-21.7-26.47-32.23-41.43-16.5C27.8 213.16 0 261.33 0 320c0 105.87 86.13 192 192 192s192-86.13 192-192c0-170.29-168-193-168-296.14z"/>
+      </svg>
+      <div>
+        <div style="font-size:40px; font-weight:800; line-height:.82;">{{ streak }}</div>
+        <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.5px;">Tage Streak</div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if show_kpi %}
+    <!-- KPI-Leiste (unten links) -->
+    <div style="position:absolute; left:0; bottom:0; background:#fff; border:2px solid #000;
+                border-left:0; border-bottom:0; border-top-right-radius:12px; padding:5px 12px; font-size:12px;">
+      <b style="font-size:14px;">{{ user }}</b>
+      &nbsp;·&nbsp; <b>{{ changesets }}</b> CS
+      &nbsp;·&nbsp; <b>{{ changes_disp }}</b> Änd.
+      &nbsp;·&nbsp; <b>{{ mapping_days }}</b> Tage
+      &nbsp;·&nbsp; Rang <b>#{{ rank_de }}</b>
+    </div>
+    {% endif %}
+
+    <!-- Attribution (unten rechts) -->
+    <div style="position:absolute; right:0; bottom:0; background:#fff; border:2px solid #000;
+                border-right:0; border-bottom:0; border-top-left-radius:8px; font-size:10px; padding:2px 7px;">
+      © OpenStreetMap
+    </div>
+
+    {% if warn != "" %}
+    <!-- Warnung: Teil der Daten fehlt (nicht fatal) -->
+    <div style="position:absolute; left:50%; bottom:6px; transform:translateX(-50%); max-width:560px;
+                background:#000; color:#fff; font-size:10px; font-weight:600; padding:3px 9px; border-radius:6px;">
+      Hinweis: {{ warn }}
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+{% endif %}
