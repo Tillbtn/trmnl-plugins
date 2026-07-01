@@ -84,18 +84,24 @@ def main():
     print(out)
 
 def patch_settings(json_text):
-    """settings.yml: strategy -> static, static_data -> Block-Scalar mit dem JSON."""
+    """settings.yml: strategy -> static, static_data -> EIN Block-Scalar mit dem JSON.
+    Ersetzt einen evtl. vorhandenen alten static_data-Block vollständig (kein Anhängen)."""
     path = os.path.join(ROOT, "src", "settings.yml")
     lines = open(path, encoding="utf-8").read().splitlines()
     result = []
-    for line in lines:
+    i = 0
+    while i < len(lines):
+        line = lines[i]
         if line.startswith("strategy:"):
-            result.append("strategy: static")
+            result.append("strategy: static"); i += 1
         elif line.startswith("static_data:"):
             result.append("static_data: |")
             result.append("  " + json_text)      # Block-Scalar -> kein YAML-Escaping nötig
+            i += 1
+            while i < len(lines) and lines[i].startswith("  "):  # alten Block-Inhalt verwerfen
+                i += 1
         else:
-            result.append(line)
+            result.append(line); i += 1
     open(path, "w", encoding="utf-8").write("\n".join(result) + "\n")
 
 if __name__ == "__main__":
